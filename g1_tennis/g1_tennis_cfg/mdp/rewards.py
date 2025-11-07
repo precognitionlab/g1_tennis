@@ -174,8 +174,8 @@ def track_swing_orientation_at_impact(env: ManagerBasedRLEnv, std: float) -> tor
     #     print(f"local {axis} → world direction:", world_axis[0])
 
     # Define the racket's normal vector in its local frame.
-    racket_local_normal = torch.tensor([0.0, -1.0, 0.0], device=env.device).expand(env.num_envs, -1) # <-- CORRECTED LINE
-    # racket_local_normal = torch.tensor([1.0, 0.0, 0.0], device=env.device).expand(env.num_envs, -1) # <-- CORRECTED LINE
+    racket_local_normal = torch.tensor([0.0, 0.0, -1.0], device=env.device).expand(env.num_envs, -1)
+    # racket_local_normal = torch.tensor([1.0, 0.0, 0.0], device=env.device).expand(env.num_envs, -1)
     
     # Rotate the local normal to the world frame to get the actual facing direction
     actual_normal = math_utils.quat_apply(racket_quat_w, racket_local_normal)

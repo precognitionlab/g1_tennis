@@ -65,7 +65,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 """Configuration for the Unitree G1 Humanoid robot without arms."""
 G1_NO_ARMS_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path = os.path.join(script_dir, "assetsV2", "g1_racket_29.usd"),
+        usd_path = os.path.join(script_dir, "assetsV3", "g1_racket_29.usd"),
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
@@ -402,7 +402,8 @@ class ActionsCfg:
     right_arm_ik=mdp.DifferentialInverseKinematicsActionCfg(
         scale=0.01,  
         body_offset=mdp.DifferentialInverseKinematicsActionCfg.OffsetCfg(
-            pos=(0.14, 0.0, 0.15),  
+            # pos=(0.14, 0.0, 0.15),  
+            pos=(0.0, 0.0, 0.0),  
             rot=(1.0, 0.0, 0.0, 0.0), 
         ), 
         asset_name="robot",  
@@ -453,7 +454,7 @@ class EventCfg:
             "pos_range_x":(0.15, 0.20),
             # "pos_range_x":(0.80, 0.90),
             # "pos_range_y":(-0.65, -0.60),
-            "pos_range_y":(-0.80, -0.76),
+            "pos_range_y":(-0.75, -0.70),
             "pos_range_z":(0.1, 0.2)
         }
     )
@@ -482,7 +483,7 @@ class G1NewRewardCfg:
         params={"std": 1.0, "time_window": 0.02} # 速度误差的指数核标准差 (m/s)
     )
     track_swing_velocity_wide = RewTerm(
-        func=mymdp.track_swing_velocity_at_impact, weight=50.0 * 10,
+        func=mymdp.track_swing_velocity_at_impact, weight=50.0 * 8,
         params={"std": 1.2, "time_window": 0.12}
     )
     # track_swing_vel_dir = RewTerm(
