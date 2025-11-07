@@ -56,7 +56,7 @@ class HomieJointPositionAction(JointAction):
         if cfg.use_default_offset:
             self._offset = self._asset.data.default_joint_pos[:, self._joint_ids].clone()
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        homie_policy_path = os.path.join(script_dir, "..", "..", "assetsV2", "homie.pt")
+        homie_policy_path = os.path.join(script_dir, "..", "..", "assets", "homie.pt")
         self.homie_policy = torch.jit.load(homie_policy_path).to(self.device)
         self.homie_action = torch.zeros(self.num_envs, 12, device=self.device) # homie command
 

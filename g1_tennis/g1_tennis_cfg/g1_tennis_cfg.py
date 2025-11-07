@@ -65,7 +65,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 """Configuration for the Unitree G1 Humanoid robot without arms."""
 G1_NO_ARMS_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path = os.path.join(script_dir, "assetsV3", "g1_racket_29.usd"),
+        usd_path = os.path.join(script_dir, "assets", "robotV3", "g1_racket_29.usd"),
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
