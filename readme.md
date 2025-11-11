@@ -8,7 +8,7 @@ This project was trained in **IsaacSim** 4.5.0 and **IsaacLab** 2.0.0, and was t
 2. under your `isaaclab/source` path, clone this project. Path should look like this: `isaaclab/source/g1_tennis`
 3. install the project:
    `python -m pip install -e source/g1_tennis`
-4. under your `isaaclab\scripts\reinforcement_learning\rsl_rl` path, you will find two .py files: `train.py` and `play.py`. Add `import g1_tennis`  code before the `main` function .
+4. under your `isaaclab\scripts\reinforcement_learning\rsl_rl` path, you will find two .py files: `train.py` and `play.py`. In both files, add `import g1_tennis`  code before the `main` function.
 
 ## how to use
 
@@ -25,4 +25,4 @@ Trained checkpoints are saved in `isaaclab/source/g1_tennis/logs`, you need to c
 
 The `newVel8good` is trained with robotV2, and the `V3good` is trained with robotV3 (its performance is not that stable because the pitch lock)
 
-Default robot is robotV3, if you want to switch the robot, `usd_path=os.path.join(script_dir, "assets", "robotV3", "g1_racket_29.usd")` in `g1_tennis_cfg.py`.
+Default robot is robotV3, if you want to switch the robot, modify  `usd_path=os.path.join(script_dir, "assets", "robotV3", "g1_racket_29.usd")` in `g1_tennis_cfg.py`.
