@@ -239,30 +239,31 @@ class TrainSceneCfg(InteractiveSceneCfg):
         )
     )
     # object
-    # object = SceneEntityCfg(
-    #     prim_path="{ENV_REGEX_NS}/Object",
-    #     spawn=sim_utils.XformCfg(),
-    #     init_state=AssetBaseCfg.InitialStateCfg(),
-    # )
-    # object: RigidObjectCfg = RigidObjectCfg(
-    #     prim_path="/World/envs/env_.*/Object",
-    #     spawn=sim_utils.MultiAssetSpawnerCfg(
-    #         assets_cfg=[
-    #             sim_utils.SphereCfg(
-    #                 radius=0.033,
-    #                 visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.0, 0.0, 1.0), metallic=0.2),
-    #             ),
-                
-    #         ],
-    #         random_choice=True,
-    #         rigid_props=sim_utils.RigidBodyPropertiesCfg(
-    #             solver_position_iteration_count=4, solver_velocity_iteration_count=0,disable_gravity=True,
-    #         ),
-    #         mass_props=sim_utils.MassPropertiesCfg(mass=0.057),
-    #         collision_props=sim_utils.CollisionPropertiesCfg(),
-    #     ),
-    #     init_state=RigidObjectCfg.InitialStateCfg(pos=(4.0, 0.0, 1.0)),
-    # )
+    object: RigidObjectCfg = RigidObjectCfg(
+        prim_path="/World/envs/env_.*/Object",
+        spawn=sim_utils.MultiAssetSpawnerCfg(
+            assets_cfg=[
+                sim_utils.SphereCfg(
+                    radius=0.033,
+                    visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(1.0, 0.0, 0.0), metallic=0.2),
+                    physics_material=sim_utils.RigidBodyMaterialCfg(
+                        restitution=0.60,      # 网球恢复系数 0.55~0.65
+                        restitution_combine_mode="max",
+                        static_friction=0.6,
+                        dynamic_friction=0.5,
+                    ),     
+                ),
+   
+            ],
+            random_choice=True,
+            rigid_props=sim_utils.RigidBodyPropertiesCfg(
+                solver_position_iteration_count=4, solver_velocity_iteration_count=0,disable_gravity=False,
+            ),
+            mass_props=sim_utils.MassPropertiesCfg(mass=0.057),
+            collision_props=sim_utils.CollisionPropertiesCfg(),
+        ),
+        init_state=RigidObjectCfg.InitialStateCfg(pos=(4.0, 0.0, 1.0)),
+    )
 
 
 history_length = 6
@@ -452,20 +453,19 @@ class EventCfg:
         mode="reset",
         params={
             "pos_range_x":(0.15, 0.20),
-            # "pos_range_x":(0.80, 0.90),
-            # "pos_range_y":(-0.65, -0.60),
             "pos_range_y":(-0.75, -0.70),
-            "pos_range_z":(0.1, 0.2)
+            "pos_range_z":(-0, -0.01)
+            # "pos_range_z":(0.1, 0.2)
         }
     )
 
-    # reset_ball = EventTerm(
-    #     func=mdp.reset_ball,  # 你的自定义函数 
-    #     mode="reset",                 # 在reset时触发
-    #     params={
-    #         "asset_cfg": SceneEntityCfg("object"),
-    #     }
-    # )
+    reset_ball = EventTerm(
+        func=mymdp.reset_ball,  # 你的自定义函数 
+        mode="reset",                 # 在reset时触发
+        params={
+            "asset_cfg": SceneEntityCfg("object"),
+        }
+    )
 
 
 
@@ -639,7 +639,7 @@ class G1TennisEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.disable_contact_processing = True
         self.sim.physics_material = self.scene.terrain.physics_material
         self.sim.physics_material.friction_combine_mode = "average"
-        self.sim.physics_material.restitution_combine_mode = "average"
+        self.sim.physics_material.restitution_combine_mode = "max"
 
 
         if self.scene.contact_forces is not None:

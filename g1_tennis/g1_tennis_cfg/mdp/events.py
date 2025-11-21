@@ -71,6 +71,7 @@ def reset_hit(
 def reset_ball(
     env: ManagerBasedRLEnv,
     env_ids: torch.Tensor,
+    initial_vel: float = -10.0,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("object"),
 ):
     """将球重置到 hit_pos_w 位置"""
@@ -83,6 +84,17 @@ def reset_ball(
     root_state[:, :3] = env.hit_position_w[env_ids]
     root_state[:, 3:7] = torch.tensor([1.0, 0.0, 0.0, 0.0], device=env.device)  # 默认四元数
     root_state[:, 7:] = 0.0  # 速度清零
+
+    displacement_x = -initial_vel * env.target_intercept_time[env_ids].squeeze(-1)  # 如果v_x=-12, t=1, 则位移=+12
+    initial_x = env.hit_position_w[:, 0] + displacement_x
+    root_state[:, 0] = initial_x
+
+    gravity = abs(env.sim.cfg.gravity[2])
+    target_time = env.target_intercept_time[env_ids].squeeze(-1)
+    v_x = initial_vel
+    v_z = gravity * target_time / 2.0
+    root_state[:, 7] = v_x
+    root_state[:, 9] = v_z
 
     # 分别写入 pose 和 velocity
     asset.write_root_pose_to_sim(root_state[:, :7], env_ids=env_ids)      # 位置 + 四元数
