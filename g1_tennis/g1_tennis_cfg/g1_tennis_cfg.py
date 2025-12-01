@@ -285,7 +285,7 @@ class ObservationsCfg:
         actions = ObsTerm(func=mdp.last_action)
         
         hit_pos_target = ObsTerm(func=mymdp.hit_pos_rel_base_target)
-        hit_pos_relative = ObsTerm(func=mymdp.hit_pos_rel_base_relative)
+        # hit_pos_relative = ObsTerm(func=mymdp.hit_pos_rel_base_relative)
         time_before_hit = ObsTerm(func=mymdp.time_before_hit)
         racket_pos = ObsTerm(func=mymdp.racket_pos_rel_base)
         racket_vel = ObsTerm(func=mymdp.racket_vel_rel_base)
@@ -412,7 +412,7 @@ class ActionsCfg:
                 "right_shoulder_yaw_joint",
                 "right_elbow_joint",
                 "right_wrist_.*"],        
-        body_name="racket_link",
+        body_name="right_wrist_yaw_link",
         controller=mdp.DifferentialIKControllerCfg(command_type="pose", use_relative_mode=True, ik_method="dls"),
     )
 ##
@@ -452,8 +452,6 @@ class EventCfg:
         mode="reset",
         params={
             "pos_range_x":(0.15, 0.20),
-            # "pos_range_x":(0.80, 0.90),
-            # "pos_range_y":(-0.65, -0.60),
             "pos_range_y":(-0.75, -0.70),
             "pos_range_z":(0.1, 0.2)
         }

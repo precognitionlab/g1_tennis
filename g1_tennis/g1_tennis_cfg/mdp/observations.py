@@ -101,9 +101,11 @@ def time_before_hit(env: ManagerBasedEnv) -> torch.Tensor:
     # 3. 计算剩余时间。
     remaining = target_intercept_time - current_times
     # time_remaining_tensor = torch.clamp(remaining, min=0.0)
+    time_remaining_tensor = torch.clamp(remaining, min=-3.0, max=3.0)
     if env.debug_mode:
         print("time_remaining_tensor: ", remaining)
-    return remaining.view(env.num_envs, 1)  # 确保输出是一个列向量
+    return time_remaining_tensor.view(env.num_envs, 1)  # 确保输出是一个列向量
+    # return remaining.view(env.num_envs, 1)  # 确保输出是一个列向量
 
 
 def racket_pos_rel_base(env: ManagerBasedEnv) -> torch.Tensor:

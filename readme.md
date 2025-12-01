@@ -15,7 +15,7 @@ This project was trained in **IsaacSim** 4.5.0 and **IsaacLab** 2.0.0, and was t
 The logs should be saved in `isaaclab/logs/rsl_rl/g1_rough` path.
 
 1. train:
-   `python scripts/rsl_rl/play.py --num_envs=4096 --task=g1_tennis --headless [--max_iteration=ITERATION] [--resume=True --load_run=RUNNAME]`
+   `python scripts/rsl_rl/train.py --num_envs=4096 --task=g1_tennis --headless [--max_iteration=ITERATION] [--resume=True --load_run=RUNNAME]`
 2. play:
    `python scripts/rsl_rl/play.py --num_envs=1 --task=g1_tennis --load_run=RUNNAME`
 
