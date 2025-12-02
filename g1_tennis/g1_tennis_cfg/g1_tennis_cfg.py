@@ -257,7 +257,7 @@ class TrainSceneCfg(InteractiveSceneCfg):
             ],
             random_choice=True,
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
-                solver_position_iteration_count=4, solver_velocity_iteration_count=0,disable_gravity=False,
+                solver_position_iteration_count=16, solver_velocity_iteration_count=8,disable_gravity=False,
             ),
             mass_props=sim_utils.MassPropertiesCfg(mass=0.057),
             collision_props=sim_utils.CollisionPropertiesCfg(),
@@ -330,8 +330,8 @@ class ObservationsCfg:
         hit_pos_relative = ObsTerm(func=mymdp.hit_pos_rel_base_relative)
         time_before_hit = ObsTerm(func=mymdp.time_before_hit)
         racket_pos = ObsTerm(func=mymdp.racket_pos_rel_base)
-        racket_vel = ObsTerm(func=mymdp.racket_vel_rel_base)
-        racket_facing = ObsTerm(func=mymdp.racket_facing_rel_base)
+        # racket_vel = ObsTerm(func=mymdp.racket_vel_rel_base)
+        # racket_facing = ObsTerm(func=mymdp.racket_facing_rel_base)
         # history_length = 3
 
         def __post_init__(self):
